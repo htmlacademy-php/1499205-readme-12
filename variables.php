@@ -1,6 +1,7 @@
 <?php
 
-$is_auth = rand(0, 1);
+// $is_auth = rand(0, 1);
+$is_auth = 1;
 $user_name = 'Илья';  // добавляем имя пользователя
 $posts = [
     [
@@ -40,4 +41,6 @@ $posts = [
     ]
 
 ];
+
+$title = "Популярное";
 
