@@ -1,4 +1,5 @@
 
+
 <div class="container">
     <h1 class="page__title page__title--popular">Популярное</h1>
 </div>
@@ -86,17 +87,19 @@
     </div>
     <div class="popular__posts">
 
-        <?php foreach ($posts as $post): ?>  <!-- Итерируемся по массиву -->
+        <?php
+        foreach ($posts as $post):
+        ?>
 
             <article class="popular__post post <?=$post["type"] ?>">
                 <header class="post__header">
-                    <h2> <?= $post["header"] ?> </h2>
+                    <h2> <?= htmlspecialchars($post["header"]) ?> </h2>
                 </header>
                 <div class="post__main">
                     <?php if ($post["type"] === "post-quote"): ?>  <!-- Проверка на тип поста -->
                         <blockquote>
                             <p>
-                                <?=$post["content"] ?>
+                                <?= htmlspecialchars($post["content"])  ?>
                             </p>
                             <cite>Неизвестный Автор</cite>
                         </blockquote>
@@ -108,7 +111,7 @@
                                         <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                     </div>
                                     <div class="post-link__info">
-                                        <h3> <?= $post["header"] ?> </h3>
+                                        <h3> <?= htmlspecialchars($post["header"]) ?> </h3>
                                     </div>
                                 </div>
                                 <span> <?= $post["content"] ?> </span>
@@ -133,7 +136,7 @@
                             </div>
                             <div class="post__info">
                                 <b class="post__author-name"> <?=$post["username"] ?> </b>
-                                <time class="post__time" datetime="">дата</time>
+                                <time class="post__time" datetime=""> <?= $post['date'] ?> </time>
                             </div>
                         </a>
                     </div>
