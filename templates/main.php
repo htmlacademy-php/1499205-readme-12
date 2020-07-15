@@ -88,6 +88,8 @@
     <div class="popular__posts">
 
         <?php
+        $i = 0; // счетчик для генерации случайных дат
+
         foreach ($posts as $post):
         ?>
 
@@ -114,7 +116,7 @@
                                         <h3> <?= htmlspecialchars($post["header"]) ?> </h3>
                                     </div>
                                 </div>
-                                <span> <?= $post["content"] ?> </span>
+                                <span> <?= htmlspecialchars($post["content"]) ?> </span>
                             </a>
                         </div>
                     <?php elseif ($post["type"] === "post-photo"): ?>
@@ -122,7 +124,7 @@
                             <img src="img/<?=$post["content"]?>" alt="Фото от пользователя" width="360" height="240">
                         </div>
                     <?php elseif ($post["type"] === "post-text"): ?>
-                        <p> <?= text_limiter($post["content"]) ?></p>
+                        <p> <?= text_limiter(htmlspecialchars($post["content"])) ?></p>
 
                     <?php endif; ?> <!-- Закрываем условие -->
 
@@ -136,7 +138,11 @@
                             </div>
                             <div class="post__info">
                                 <b class="post__author-name"> <?=$post["username"] ?> </b>
-                                <time class="post__time" datetime=""> <?= $post['date'] ?> </time>
+                                <time class="post__time"
+                                      datetime="<?= post_original_date($i) ?>"
+                                      title="<?= post_formatted_date($i) ?>">
+                                    <?= count_post_age($post, $i) ?>
+                                </time>
                             </div>
                         </a>
                     </div>
@@ -164,6 +170,10 @@
                 </footer>
             </article>
 
-        <?php endforeach; ?> <!-- Закрываем цикл -->
+
+        <?php
+        $i++;
+
+        endforeach; ?> <!-- Закрываем цикл -->
     </div>
 </div>
