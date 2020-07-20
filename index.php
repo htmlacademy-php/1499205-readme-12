@@ -3,6 +3,7 @@
 include_once ('functions.php');
 include_once ('variables.php');
 include_once ('helpers.php');
+include_once('constants.php');
 
 date_default_timezone_set('Europe/Moscow');
 
@@ -13,8 +14,8 @@ $page_content = include_template("main.php", [
     ]
 );
 
-$layout_content = include_template("layout.php",
-    ['page_content' => $page_content,
+$layout_content = include_template("layout.php", [
+    'page_content' => $page_content,
     'title' => $title,
     'is_auth' => $is_auth,
     'user_name' => $user_name,

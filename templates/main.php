@@ -95,13 +95,13 @@
 
             <article class="popular__post post <?=$post["type"] ?>">
                 <header class="post__header">
-                    <h2> <?= htmlspecialchars($post["header"]) ?> </h2>
+                    <h2> <?= htmlspecialchars($post["header"], ENT_QUOTES) ?> </h2>
                 </header>
                 <div class="post__main">
                     <?php if ($post["type"] === "post-quote"): ?>  <!-- Проверка на тип поста -->
                         <blockquote>
                             <p>
-                                <?= htmlspecialchars($post["content"])  ?>
+                                <?= htmlspecialchars($post["content"], ENT_QUOTES)  ?>
                             </p>
                             <cite>Неизвестный Автор</cite>
                         </blockquote>
@@ -113,10 +113,10 @@
                                         <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                     </div>
                                     <div class="post-link__info">
-                                        <h3> <?= htmlspecialchars($post["header"]) ?> </h3>
+                                        <h3> <?= htmlspecialchars($post["header"], ENT_QUOTES) ?> </h3>
                                     </div>
                                 </div>
-                                <span> <?= htmlspecialchars($post["content"]) ?> </span>
+                                <span> <?= htmlspecialchars($post["content"], ENT_QUOTES) ?> </span>
                             </a>
                         </div>
                     <?php elseif ($post["type"] === "post-photo"): ?>
@@ -124,7 +124,7 @@
                             <img src="img/<?=$post["content"]?>" alt="Фото от пользователя" width="360" height="240">
                         </div>
                     <?php elseif ($post["type"] === "post-text"): ?>
-                        <p> <?= text_limiter(htmlspecialchars($post["content"])) ?></p>
+                        <p> <?= text_limiter(htmlspecialchars($post["content"], ENT_QUOTES)) ?></p>
 
                     <?php endif; ?> <!-- Закрываем условие -->
 

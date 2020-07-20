@@ -21,28 +21,25 @@ function text_limiter($text, $limit = 300) {
 // Функция расчета относительной даты
 
 function count_post_age($post, $i) {
-    $cur_date = date_format(date_create('now'), 'Y-m-d H:i:s'); //текущая дата и время
-    $post['date'] = date_format(date_create(generate_random_date($i)), 'Y-m-d H:i:s');
-    $cur_date_stamp = strtotime($cur_date);
-    $post_date_stamp = strtotime($post['date']);
-    $diff = $cur_date_stamp - $post_date_stamp;
+    $post['date'] = generate_random_date($i);
+    $diff = time() - strtotime($post['date']);
 
-    if ($diff < 60) {
+    if ($diff < MINUTE_STAMP) {
         $post['date'] = 'только что';
-    } else if ($diff >= 60 && $diff < 3600) {
-        $date = intval(floor($diff / 60));
+    } else if ($diff >= MINUTE_STAMP && $diff < HOUR_STAMP) {
+        $date = intval(floor($diff / MINUTE_STAMP));
         $post['date'] = $date . ' ' . get_noun_plural_form($date, 'минута', 'минуты', 'минут') . ' назад';
-    } else if ($diff >= 3600 && $diff < 86400 ) {
-        $date = intval(floor($diff / 3600));
+    } else if ($diff >= HOUR_STAMP && $diff < DAY_STAMP ) {
+        $date = intval(floor($diff / HOUR_STAMP));
         $post['date'] = $date . ' ' . get_noun_plural_form($date, 'час', 'часа', 'часов') . ' назад';
-    } else if ($diff >= 86400 && $diff < 604800) {
-        $date = intval(floor($diff / 86400));
+    } else if ($diff >= DAY_STAMP && $diff < WEEK_STAMP) {
+        $date = intval(floor($diff / DAY_STAMP));
         $post['date'] = $date . ' ' . get_noun_plural_form($date, 'день', 'дня', 'дней') . ' назад';
-    } else if ($diff >= 604800 && $diff < 3024000) {
-        $date = intval(floor($diff / 604800));
+    } else if ($diff >= WEEK_STAMP && $diff < MONTH_STAMP) {
+        $date = intval(floor($diff / WEEK_STAMP));
         $post['date'] = $date . ' ' . get_noun_plural_form($date, 'неделя', 'недели', 'недель') . ' назад';
-    } else if ($diff >= 3024000) {
-        $date = intval(floor($diff / 3024000));
+    } else if ($diff >= MONTH_STAMP) {
+        $date = intval(floor($diff / MONTH_STAMP));
         $post['date'] = $date . ' ' . get_noun_plural_form($date, 'месяц', 'месяца', 'месяцев') . ' назад';
     }
     return $post['date'];
