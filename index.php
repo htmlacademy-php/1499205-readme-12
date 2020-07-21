@@ -3,9 +3,23 @@
 include_once ('functions.php');
 include_once ('variables.php');
 include_once ('helpers.php');
+include_once('constants.php');
 
-$page_content = include_template("main.php", ['posts' => $posts]);
+date_default_timezone_set('Europe/Moscow');
 
-$layout_content = include_template("layout.php", ['page_content' => $page_content, 'title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name]);
+$title = "Популярное";
+
+$page_content = include_template("main.php", [
+    'posts' => $posts,
+    ]
+);
+
+$layout_content = include_template("layout.php", [
+    'page_content' => $page_content,
+    'title' => $title,
+    'is_auth' => $is_auth,
+    'user_name' => $user_name,
+    ]
+);
 
 print($layout_content);

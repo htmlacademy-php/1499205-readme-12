@@ -1,4 +1,5 @@
 
+
 <div class="container">
     <h1 class="page__title page__title--popular">Популярное</h1>
 </div>
@@ -86,17 +87,21 @@
     </div>
     <div class="popular__posts">
 
-        <?php foreach ($posts as $post): ?>  <!-- Итерируемся по массиву -->
+        <?php
+        $i = 0; // счетчик для генерации случайных дат
+
+        foreach ($posts as $post):
+        ?>
 
             <article class="popular__post post <?=$post["type"] ?>">
                 <header class="post__header">
-                    <h2> <?= $post["header"] ?> </h2>
+                    <h2> <?= htmlspecialchars($post["header"], ENT_QUOTES) ?> </h2>
                 </header>
                 <div class="post__main">
                     <?php if ($post["type"] === "post-quote"): ?>  <!-- Проверка на тип поста -->
                         <blockquote>
                             <p>
-                                <?=$post["content"] ?>
+                                <?= htmlspecialchars($post["content"], ENT_QUOTES)  ?>
                             </p>
                             <cite>Неизвестный Автор</cite>
                         </blockquote>
@@ -108,10 +113,10 @@
                                         <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                     </div>
                                     <div class="post-link__info">
-                                        <h3> <?= $post["header"] ?> </h3>
+                                        <h3> <?= htmlspecialchars($post["header"], ENT_QUOTES) ?> </h3>
                                     </div>
                                 </div>
-                                <span> <?= $post["content"] ?> </span>
+                                <span> <?= htmlspecialchars($post["content"], ENT_QUOTES) ?> </span>
                             </a>
                         </div>
                     <?php elseif ($post["type"] === "post-photo"): ?>
@@ -119,7 +124,7 @@
                             <img src="img/<?=$post["content"]?>" alt="Фото от пользователя" width="360" height="240">
                         </div>
                     <?php elseif ($post["type"] === "post-text"): ?>
-                        <p> <?= text_limiter($post["content"]) ?></p>
+                        <p> <?= text_limiter(htmlspecialchars($post["content"], ENT_QUOTES)) ?></p>
 
                     <?php endif; ?> <!-- Закрываем условие -->
 
@@ -133,7 +138,11 @@
                             </div>
                             <div class="post__info">
                                 <b class="post__author-name"> <?=$post["username"] ?> </b>
-                                <time class="post__time" datetime="">дата</time>
+                                <time class="post__time"
+                                      datetime="<?= post_original_date($i) ?>"
+                                      title="<?= post_formatted_date($i) ?>">
+                                    <?= count_post_age($post, $i) ?>
+                                </time>
                             </div>
                         </a>
                     </div>
@@ -161,6 +170,10 @@
                 </footer>
             </article>
 
-        <?php endforeach; ?> <!-- Закрываем цикл -->
+
+        <?php
+        $i++;
+
+        endforeach; ?> <!-- Закрываем цикл -->
     </div>
 </div>
